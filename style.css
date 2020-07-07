@@ -1,115 +1,180 @@
-html {
-	width: 100%;
-	height: 100%;
-}
+/*==========================*/
+/*====== Basic styles ======*/
+/*==========================*/
 
 body {
+	min-height: 100vh;
+	box-sizing: border-box;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
 	display: flex;
-	width: 100%;
-	height: 100%;
+	-webkit-flex-direction: column;
+	-moz-flex-direction: column;
+	-ms-flex-direction: column;
+	-o-flex-direction: column;
 	flex-direction: column;
-	justify-content: space-around;
-	align-items: center;
-}
-
-footer {
-	text-align: center;
-	height: 75px;
-	width: 100%;
-	background-color: #eee;
-}
-
-footer p {
-	margin: 25px auto;		
 }
 
 .container {
-	min-height: 200px;
-	display: flex;
-	flex: 1 0 200px;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-}
-
-header {
-	display: flex;
+	height: 100%;
 	width: 100%;
-	justify-content: center;
-}
-
-.header p {
-	display: flex;
-	justify-content: center;
-}
-
-h1, h3, h6 {
-	text-align: center;
-}
-
-h1 span {
-	font-size: 12px;
-}
-
-main {
-	height: 250px;
-	margin-bottom: 20px;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
 	display: flex;
 	flex-direction: column;
-}
-
-form .form-group {
-	display: flex;
-	flex: 0 1 100%;
-	flex-direction: column;
 	justify-content: center;
+	-ms-align-items: center;
 	align-items: center;
 }
 
-.form-group input[type="number"] {
+.main {
+	flex-grow: 1;
+}
+
+/*==========================*/
+/*======== HEADER ==========*/
+/*==========================*/
+
+.header {
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
 	display: flex;
-	flex: 1 1;
-	margin-bottom: 20px;
+	justify-content: center;
+	-ms-align-items: baseline;
+	align-items: baseline;
+	flex-wrap: wrap;
+	margin-top: 30px;
 }
 
-.check, .restart, .hint {
-	width: 250px;
+.header__title {
+	margin-right: 5px;
 }
 
-.check, .hint {
+.header__rules {
+	padding: 0;
+	margin-right: 10px;
+	width: 20px;
+	height: 20px;
+	top: -15px;
+	font-size: 10px;
+	position: relative;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	justify-content: center;
+	-ms-align-items: center;
+	align-items: center;
+}
+
+/*==========================*/
+/*====== MAIN CONTENT ======*/
+/*==========================*/
+
+.content {
+	position: relative;
+	width: 100%;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	flex: 1 1 300px;
+	-webkit-flex-direction: column;
+	-moz-flex-direction: column;
+	-ms-flex-direction: column;
+	-o-flex-direction: column;
+	flex-direction: column;
+	justify-content: flex-start;
+	-ms-align-items: flex-start;
+	align-items: center;
+}
+
+.content__form {
+	width: 100%;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	-webkit-flex-direction: column;
+	-moz-flex-direction: column;
+	-ms-flex-direction: column;
+	-o-flex-direction: column;
+	flex-direction: column;
+	-ms-align-items: center;
+	align-items: center;
+	justify-content: center;
+}
+
+.content__input {
+	position: relative;
+	width: 90%;
+	max-width: 500px;
+	box-sizing: border-box;
 	margin-bottom: 10px;
 }
 
-.hint.disabled {
-	display: none;
+.content__check, .content__restart, .content__hint {
+	width: 200px;
+	margin-top: 10px;
 }
 
-.result {
+.content__story {
+	margin: 40px 0;
+}
+
+.content__story-header {
+	text-align: center;
+}
+
+/*==========================*/
+/*========= FOOTER =========*/
+/*==========================*/
+
+.footer {
+	background-color: #eee;
+	height: 50px;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
 	display: flex;
 	justify-content: center;
+	-ms-align-items: center;
+	align-items: center;
 }
 
-.warnings {
-	margin-bottom: 20px;
-	width: 200px;
-	color: red;
-	margin: 0 auto;
+.footer__content {
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	justify-content: center;
+	-ms-align-items: center;
+	align-items: baseline;
+	flex-wrap: wrap;
+	line-height: 1.2;
 }
 
-dialog {
-	border: none;
-	border-radius: 5px;
-	background-color: #fff;
+.footer__content span {
+	font-size: 10px;
+	position: relative;
+	left: 15px;
 }
+/*===========================*/
+/*==== OTHER SIDE STYLES ====*/
+/*===========================*/
 
-.languages {
-	margin-bottom: 20px;
-}
-
-.languages a+a {
-	margin-left: 30px;
-}
-
-a {
-	cursor: pointer;
+.alert {
+	margin-top: 10px;
+	transition: .3s ease;
 }
