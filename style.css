@@ -57,12 +57,12 @@ body {
 }
 
 .header__rules {
-	padding: 0;
+	padding: 5px;
 	margin-right: 10px;
-	width: 20px;
-	height: 20px;
+	/* width: 20px;
+	height: 20px; */
 	top: -15px;
-	font-size: 10px;
+	font-size: 12px;
 	position: relative;
 	display: -webkit-flex;
 	display: -moz-flex;
@@ -162,6 +162,7 @@ body {
 	-ms-align-items: center;
 	align-items: baseline;
 	flex-wrap: wrap;
+	align-items: center;
 	line-height: 1.2;
 }
 
@@ -177,4 +178,24 @@ body {
 .alert {
 	margin-top: 10px;
 	transition: .3s ease;
+}
+
+/* ===================== */
+/* === MEDIA QUERIES === */
+/* ===================== */
+
+@media (max-width: 769px) {
+	.content__check, 
+	.content__hint, 
+	.content__restart,
+	.content__input,
+	.alert, 
+	.content__story,
+	.content__story-header {
+		font-size: 24px;
+	}
+
+	.header__rules {
+		font-size: 16px;
+	}
 }

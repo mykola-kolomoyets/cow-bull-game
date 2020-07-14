@@ -9,8 +9,7 @@ const parentEl = document.querySelector(".content__form");
 
 let movesStoryBlock;
 
-// elements for adding into DOM
-// Game Data
+// === Elements for adding into DOM ===
 let currentNumber = 0;
 let moves = 0;
 let cows = 0;
@@ -21,7 +20,7 @@ const warnings = [
 	"Empty field!!!"
 ];
 let isHintShown = false;
-let incorrentNumbers = [];
+let incorrectNumbers = [];
 
 let movesStory = [];
 
@@ -31,7 +30,7 @@ let movesStory = [];
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 // === Working with game Data
-const hasRepeatingdigits = (num) => (/([0-9]).*?\1/).test(num);
+const hasRepeatedDigits = (num) => (/([0-9]).*?\1/).test(num);
 
 const getRandomChoice = arr => Math.floor(Math.random() * arr.length);
 
@@ -45,10 +44,10 @@ const addElement = (element, className = "", value) => {
 	return el;
 }
 
-const displayMessage = (async(parent, child) => {
-		parent.appendChild(child);
+const displayMessage = (async(child) => {
+		parentEl.appendChild(child);
 		await sleep(3000);
-		parent.removeChild(child);
+		parentEl.removeChild(child);
 })
 
 // ============================= //
@@ -59,10 +58,12 @@ const restartGame = () => {
 	bulls = 0;
 	currentNumber = 0;
 	moves = 0;
-	incorrentNumbers = [];
+	incorrectNumbers = [];
+
 	if (movesStoryBlock) deleteStory();
 
 	document.querySelector(".content__moves").textContent = "Ready?";
+	checkButton.style.display = 'block';
 
 	main();
 }
@@ -72,25 +73,26 @@ checkButton.addEventListener('click', (async() => {
 	const inputEl = document.querySelector(".content__input");
 
 	let warningText = "";
-	let guess = inputEl.value;
-
-	guess = parseInt(guess, 10);
+	let guess = +inputEl.value;
+	// === Clearing the input field ===
 	inputEl.value = "";
 
 	if (guess < 1000 || guess >= 10000) warningText += warnings[0];
 	if (warningText) warningText += "<br>";
-	if (hasRepeatingdigits(guess)) warningText += `${warnings[1]}`;
+	if (hasRepeatedDigits(guess)) warningText += warnings[1];
 	if (!guess) warningText = warnings[2];
 
 	if (warningText) {
 		const warningEl = addElement('div', 'alert alert-danger', warningText);
-		displayMessage(parentEl, warningEl);
+		displayMessage(warningEl);
 	} 
 	else {
 		if (guess === currentNumber) {
+			// === When win --- check button removes        ===
+			// === And check button removes until next game ===
 			const winEl = addElement('div','alert alert-success', "YOU WON!!!");
-			displayMessage(parentEl, winEl);
-			restartGame();
+			displayMessage(winEl);
+			checkButton.style.display = 'none';
 			return;
 		} 
 		else {
@@ -98,6 +100,7 @@ checkButton.addEventListener('click', (async() => {
 
 			const guessArr = Array.from(String(guess), Number);
 			const currNumArr = Array.from(String(currentNumber), Number);
+
 			for (let i = 0; i < 4; i++) {
 				if (guessArr[i] === currNumArr[i]) bulls++;
 				else if (currNumArr.includes(guessArr[i])) cows++;
@@ -108,14 +111,13 @@ checkButton.addEventListener('click', (async() => {
 
 			const dataEl = addElement('div', 'alert alert-info', dataHTML);
 
-			displayMessage(parentEl, dataEl);
+			displayMessage(dataEl);
 
 			// === Adding the hint button block === //
 			if (moves >= 10 && !isHintShown) {
 				isHintShown = true;
 				const hintButton = addElement('button', 'btn btn-outline-primary content__hint', 'Hint');
 				hintButton.addEventListener('click', showHint);
-				const neighbourBtn = document.querySelector("content__check");
 				parentEl.insertBefore(hintButton, parentEl.childNodes[2]);
 			}
 		}
@@ -130,14 +132,15 @@ checkButton.addEventListener('click', (async() => {
 
 		if (movesStory.length === 1) {
 			movesStoryBlock = addElement('div', 'content__story', '');
+
 			const movesStoryList = addElement('ul', 'list-group', "");
 			const movesStoryHeader = addElement('h5', 'content__story-header', "Moves Story");
+
 			movesStoryBlock.appendChild(movesStoryHeader);
 			movesStoryBlock.appendChild(movesStoryList);
 			document.getElementById("content").appendChild(movesStoryBlock);
 		}
 			
-
 		addDataToStory(document.querySelector(".list-group"), movesStory[0]);
 	}
 
@@ -146,11 +149,11 @@ checkButton.addEventListener('click', (async() => {
 }));
 
 const showHint = (async () => {
-	const randIncrrentNums = [
-		Math.floor(Math.random() * incorrentNumbers.length),
-		Math.floor(Math.random() * incorrentNumbers.length)
+	const randIncorrectNumbers = [
+		Math.floor(Math.random() * incorrectNumbers.length),
+		Math.floor(Math.random() * incorrectNumbers.length)
 	];
-	const hintMsg = `Hint: digits are not in the number: ${randIncrrentNums[0]}, ${randIncrrentNums[1]}`;
+	const hintMsg = `Hint: digits are not in the number: ${randIncorrectNumbers[0]}, ${randIncorrectNumbers[1]}`;
 	const hintText = addElement('p', 'alert alert-info', hintMsg);
 	displayMessage(parentEl, hintText);
 })
@@ -168,11 +171,11 @@ const deleteStory = () => {
 
 // ====================================== //
 // === Generates number 
-// === and saves the incorect numbers
+// === and saves the incorrect numbers
 // === for hints
 // ====================================== //
 const generateNumber = () => {
-	let digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+	let digits = Array.apply(null, {length: 10}).map(Number.call, Number);
 	let number = "";
 
 	for (let i = 0; i < 4; i++) {
@@ -183,8 +186,9 @@ const generateNumber = () => {
 		number += digits[index];
 		digits.splice(index, 1);
 	}
-	incorrentNumbers = [...digits];
-	currentNumber =  parseInt(number, 10);
+	incorrectNumbers = [...digits];
+	currentNumber =  +number;
+	console.log(currentNumber);
 }
 
 async function main() {
